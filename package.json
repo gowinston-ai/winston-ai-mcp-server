@@ -1,0 +1,39 @@
+{
+  "name": "@winston-ai/mcp-server",
+  "version": "1.0.0",
+  "description": "A WinstonAI MCP server that detects AI generated text, images, and plagiarism",
+  "main": "dist/index.js",
+  "bin": {
+    "winston-ai-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod 755 dist/index.js",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-detection",
+    "winston-ai",
+    "plagiarism-detection",
+    "text-comparison",
+    "ai-image-detection"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.1",
+    "axios": "^1.6.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.12",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
