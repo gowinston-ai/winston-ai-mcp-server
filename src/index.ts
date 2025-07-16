@@ -3,7 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import dotenv from "dotenv";
+import 'dotenv/config'
 import { WinstonAiClient } from "./WinstonAIClient";
 
 import type {
@@ -16,8 +16,6 @@ import type {
   TextCompareRequest,
   TextCompareResponse,
 } from "./type.d";
-
-dotenv.config();
 
 // Environment variables
 const WINSTONAI_API_KEY = process.env.WINSTONAI_API_KEY
@@ -341,8 +339,6 @@ async function startServer() {
   const transport = new StdioServerTransport();
   await server
     .connect(transport);
-
-   console.info("Winston AI MCP Server running on stdio");
 }
 
 startServer().catch((error) => {
