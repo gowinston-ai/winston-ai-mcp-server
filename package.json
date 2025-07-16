@@ -1,15 +1,29 @@
 {
-  "name": "@winston-ai/mcp-server",
+  "name": "winston-ai-mcp",
   "version": "1.0.0",
-  "description": "A WinstonAI MCP server that detects AI generated text, images, and plagiarism",
+  "description": "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
+  "author": "Winston AI",
+  "license": "MIT",
+  "homepage": "https://github.com/gowinston-ai/winston-ai-mcp-server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gowinston-ai/winston-ai-mcp-server"
+  },
   "main": "dist/index.js",
   "bin": {
     "winston-ai-mcp": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc && chmod 755 dist/index.js",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prepublishOnly": "npm run build",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "mcp-start": "tsc && chmod 755 dist/index.js && node dist/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false"
   },
   "files": [
     "dist",
@@ -19,19 +33,30 @@
     "mcp",
     "model-context-protocol",
     "ai-detection",
-    "winston-ai",
     "plagiarism-detection",
     "text-comparison",
-    "ai-image-detection"
+    "ai-image-detection",
+    "winston-ai"
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.1",
     "axios": "^1.6.0",
+    "dotenv": "^17.2.0",
     "zod": "^3.22.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.12",
-    "typescript": "^5.8.3"
+    "@typescript-eslint/eslint-plugin": "^8.37.0",
+    "@typescript-eslint/parser": "^8.37.0",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0",
+    "jest": "^30.0.4",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.37.0"
   },
   "engines": {
     "node": ">=18.0.0"
