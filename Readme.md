@@ -159,8 +159,8 @@ Add to your Cursor configuration:
 ### Text Comparison
 ```typescript
 {
-  "text1": "First text to compare",
-  "text2": "Second text to compare"
+  "first_text": "First text to compare",
+  "second_text": "Second text to compare"
 }
 ```
 

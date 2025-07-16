@@ -111,8 +111,8 @@ export interface PlagiarismDetectionResponse {
  * Text Compare Interface
  */
 export interface TextCompareRequest {
-  text1: string;
-  text2: string;
+  first_text: string;
+  second_text: string;
 }
 
 interface TextCompareItems {

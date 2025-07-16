@@ -288,11 +288,11 @@ server.registerTool(
       },
     },
     inputSchema: {
-      text1: z
+      first_text: z
         .string()
         .max(120000)
         .describe("The first text to compare. Maximum 120,000 characters."),
-      text2: z
+      second_text: z
         .string()
         .max(120000)
         .describe(
@@ -300,7 +300,7 @@ server.registerTool(
         ),
     },
   },
-  async ({ text1, text2 }: TextCompareRequest) => {
+  async ({ first_text, second_text }: TextCompareRequest) => {
     if (winstonAIClient.isApiKeyInvalid()) {
       return {
         content: [
@@ -312,7 +312,7 @@ server.registerTool(
       };
     }
 
-    if (!text1 || text1.length === 0 || !text2 || text2.length === 0) {
+    if (!first_text || first_text.length === 0 || !second_text || second_text.length === 0) {
       return {
         content: [
           {
@@ -326,8 +326,8 @@ server.registerTool(
     const result = await winstonAIClient.request<TextCompareResponse>(
       "/v2/text-compare",
       JSON.stringify({
-        first_text: text1,
-        second_text: text2,
+        first_text,
+        second_text,
       }),
     );
  
