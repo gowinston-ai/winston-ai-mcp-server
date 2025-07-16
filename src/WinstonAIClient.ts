@@ -40,7 +40,7 @@ export class WinstonAiClient {
   
     public assembleTextCompareResponse(result: TextCompareResponse | IResponseError): string {
       if ('error' in result || !result.similarity_score) {
-        return "There was an error while detecting the similarity between the two texts, please try again.";
+        return JSON.stringify(result, null, 2);
       }
 
       const global_similarity_score = result.similarity_score;
@@ -48,9 +48,7 @@ export class WinstonAiClient {
       const second_text_similarity_score =
         result.second_text.similarity_percentage;
 
-        let response: string = "";
-
-        response += `The similarity score between the two texts is ${global_similarity_score}%. The first text is ${first_text_similarity_score}% similar to the second text. The second text is ${second_text_similarity_score}% similar to the first text.`;
+        let response: string = `The similarity score between the two texts is ${global_similarity_score}%. The first text is ${first_text_similarity_score}% similar to the second text. The second text is ${second_text_similarity_score}% similar to the first text.`;
 
         response += "\n\n Full API Response : \n\n" + JSON.stringify(result, null, 2);
   
@@ -59,23 +57,25 @@ export class WinstonAiClient {
   
     public assemblePlagiarismResponse(r: PlagiarismDetectionResponse | IResponseError): string {
       if ('error' in r || !r.result) {
-        return "There was an error while detecting the plagiarism in the text, please try again.";
+        return JSON.stringify(r, null, 2);
       }
   
       const result = r.result;
       
       const globalScore = result.score;
   
-      const sources = r.sources
+        let response: string = `The plagiarism detection tool Winston AI has detected the text as ${globalScore}% plagiarism.`;
+
+        let sources = r.sources
         .filter((source) => source.canAccess)
         .slice(0, 2)
         .map((source) => {
           return `"""${source.url}""" with a plagiarism score of ${source.score}% plagiarism`;
         });
-
-        let response: string = "";
-  
-        response += `The plagiarism detection tool Winston AI has detected the text as ${globalScore}% plagiarism. The main sources are ${sources.join(", ")}.`;
+        
+        if (sources.length > 0) {
+          response += ` The main plagiarized sources are ${sources.join(", ")}`;
+        }
 
         // Return all the sources in the customResponse, but dont return the plagiarismFound object
         const sourcesWithoutPlagiarism = r.sources.map((source) => {
@@ -101,24 +101,26 @@ export class WinstonAiClient {
   
     public assembleAiTextDetectorResponse(result: AiTextDetectorResponse | IResponseError): string {
       if ('error' in result || !result.score) {
-        return "There was an error while detecting the AI content in the text. Make sure your text is longuer than 300 characters and it is in a supported language. We currently support English, French, Spanish, German, Italian, Portuguese, Dutch, Tagalog, Italian, Polish and Indonesian.";
+        return JSON.stringify(result, null, 2);
   
       }
   
       const humanScore = result.score;
       const aiScore = 100 - humanScore;
-  
-      // Return the 2 most AI sentences
-      const ss = result.sentences
+
+        let response: string = `The AI detector Winston AI has detected the text as ${humanScore}% human-written. Which means that the text is ${aiScore}% likely to be written by an AI.`;
+
+        // Return the 2 most AI sentences
+        const ss = result.sentences
         .sort((a, b) => b.score - a.score)
         .slice(0, 2)
         .map((s) => {
-          return `The sentence """${s.text}""" with a score of ${s.score}`;
+          return `"""${s.text}""" with a score of ${s.score}%`;
         });
-
-        let response: string = "";
-  
-        response += `The AI detector Winston AI has detected the text as ${humanScore}% human-written. Which means that the text is ${aiScore}% likely to be written by an AI. The most AI sentences are ${ss.join(", ")}.`;
+        
+        if (ss.length > 0) {
+          response += `The most AI sentences are ${ss.join(", ")}.`;
+        }
 
         response += "\n\n Full API Response : \n\n" + JSON.stringify(result, null, 2);
         
@@ -127,7 +129,7 @@ export class WinstonAiClient {
   
     public assembleAiImageDetectorResponse(result: AiImageDetectorResponse | IResponseError): string {
       if ('error' in result || !result.human_probability) {
-        return "There was an error while detecting the AI content in the image. Make sure the URL is valid and the image is at least 256x256 pixels.";
+        return JSON.stringify(result, null, 2);
       }
 
       let response: string = "";
@@ -136,7 +138,7 @@ export class WinstonAiClient {
       const humanPercentage = Math.round(result.human_probability * 100 * 100) / 100;
       const aiPercentage = Math.round(result.ai_probability * 100 * 100) / 100;
 
-      response += `The AI detector Winston AI has detected the image as ${humanPercentage}% human-written. Which means that the image is ${aiPercentage}% likely to be written by an AI.`;
+      response += `The AI detector Winston AI has detected the image as ${humanPercentage}% human. Which means that the image is ${aiPercentage}% likely to be AI generated.`;
 
       response += "\n\n Full API Response : \n\n" + JSON.stringify(result, null, 2);
 

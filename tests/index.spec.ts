@@ -162,7 +162,7 @@ describe('Winston AI Client', () => {
             it('should return an error message', () => {
                 const result = winstonAIClient.assembleAiTextDetectorResponse(errorResult);
 
-                expect(result).toBe(AI_CONTENT_DETECTION_EXPECTED_ERROR_MESSAGE);
+                expect(result).toContain("\"error\": \"There was an error while detecting the AI content in the text.\"");
             });
         });
 
@@ -201,7 +201,7 @@ describe('Winston AI Client', () => {
             it('should return an error message', () => {
                 const result = winstonAIClient.assembleAiImageDetectorResponse(errorResult);
 
-                expect(result).toBe(AI_IMAGE_DETECTION_EXPECTED_ERROR_MESSAGE);
+                expect(result).toContain("\"error\": \"There was an error while detecting the AI content in the image.\"");
             });
         });
 
@@ -213,7 +213,7 @@ describe('Winston AI Client', () => {
             });
 
             it('then result should contain the explanation text', () => {
-                expect(result).toContain("The AI detector Winston AI has detected the image as 99.94% human-written. Which means that the image is 0.06% likely to be written by an AI.");
+                expect(result).toContain("The AI detector Winston AI has detected the image as 99.94% human. Which means that the image is 0.06% likely to be AI generated.");
             });
 
             it('then result should contain the score', () => {  
@@ -243,7 +243,7 @@ describe('Winston AI Client', () => {
             it('should return an error message', () => {
                 const result = winstonAIClient.assemblePlagiarismResponse(errorResult);
 
-                expect(result).toBe(PLAGIARISM_DETECTION_EXPECTED_ERROR_MESSAGE);
+                expect(result).toContain("\"error\": \"There was an error while detecting the plagiarism in the text.\"");
             });
         });
 
@@ -255,11 +255,11 @@ describe('Winston AI Client', () => {
             });
 
             it('then result should contain the explanation text', () => {
-                expect(result).toContain("The plagiarism detection tool Winston AI has detected the text as 71% plagiarism. The main sources are \"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism.");
+                expect(result).toContain("The plagiarism detection tool Winston AI has detected the text as 71% plagiarism. The main plagiarized sources are \"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism");
             });
 
             it('then result should contain the sources', () => {
-                expect(result).toContain("\"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism.");
+                expect(result).toContain("\"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism");
             });
             
             it('then result should contain the result object', () => {
@@ -285,7 +285,7 @@ describe('Winston AI Client', () => {
             it('should return an error message', () => {
                 const result = winstonAIClient.assembleTextCompareResponse(errorResult);
 
-                expect(result).toBe(TEXT_COMPARE_EXPECTED_ERROR_MESSAGE);
+                expect(result).toContain("\"error\": \"There was an error while detecting the similarity between the two texts.\"");
             });
         });
 
