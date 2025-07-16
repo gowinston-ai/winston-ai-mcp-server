@@ -1,5 +1,5 @@
 {
-  "name": "@winston-ai/winston-ai-mcp",
+  "name": "winston-ai-mcp",
   "version": "1.0.0",
   "description": "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
   "author": "Winston AI",

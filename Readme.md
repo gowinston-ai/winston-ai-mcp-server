@@ -14,24 +14,28 @@
 - **Confidence Scoring**: Get percentage-based confidence scores
 - **Sentence-level Analysis**: Identify the most AI-like sentences in your text
 - **Multi-language Support**: Works with text in various languages
+- **Credit cost**: 1 credit per word
 
 ### 🖼️ AI Image Detection
 - **Image Analysis**: Detect AI-generated images using advanced ML models
 - **Metadata Verification**: Analyze image metadata and EXIF data
 - **Watermark Detection**: Identify AI watermarks and their issuers
 - **Multiple Formats**: Supports JPG, JPEG, PNG, and WEBP formats
+- **Credit cost**: 300 credits per image
 
 ### 📝 Plagiarism Detection
 - **Internet-wide Scanning**: Check against billions of web pages
 - **Source Identification**: Find and list original sources
 - **Detailed Reports**: Get comprehensive plagiarism analysis
 - **Academic & Professional Use**: Perfect for content verification
+- **Credit cost**: 2 credits per word
 
 ### 🔄 Text Comparison
 - **Similarity Analysis**: Compare two texts for similarities
 - **Word-level Matching**: Detailed breakdown of matching content
 - **Percentage Scoring**: Get precise similarity percentages
 - **Bidirectional Analysis**: Compare both directions
+- **Credit cost**: 1/2 credit per total words found in both texts
 
 ## 🚀 Quick Start
 

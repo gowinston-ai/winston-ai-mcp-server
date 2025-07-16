@@ -46,6 +46,14 @@ server.registerTool(
   {
     title: "AI Text Detection",
     description: "Detects AI content in a given text to detect the likelihood of the text being written by an AI.",
+    annotations: {
+      price: {
+        type: "number",
+        description: "The price of the text detection tool, 1 credit per word",
+        value: 1,
+        unit: "credits",
+      }
+    },
     inputSchema: {
       text: z
         .string()
@@ -105,6 +113,14 @@ server.registerTool(
   {
     title: "AI Image Detection",
     description: "Detects AI content in a given image by verifying image metada and using a machine learning system trained to differentiate between human and AI-generated images.",
+    annotations: {
+      price: {
+        type: "number",
+        description: "The price of the image detection tool, 300 credits per image",
+        value: 300,
+        unit: "credits",
+      },
+    },
     inputSchema: {
       url: z
         .string()
@@ -173,6 +189,14 @@ server.registerTool(
   {
     title: "Plagiarism Detection",
     description: "Winston AI’s plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required.",
+    annotations: {
+      price: {
+        type: "number",
+        description: "The price of the plagiarism detection tool, 2 credits per word",
+        value: 2,
+        unit: "credits",
+      },
+    },
     inputSchema: {
       text: z
         .string()
@@ -255,6 +279,14 @@ server.registerTool(
   {
     title: "Text Compare",
     description: "Compares two texts and returns the similarity score",
+    annotations: {
+      price: {
+        type: "number",
+        description: "The price of the text comparison tool, 1/2 credit per total words found in both texts",
+        value: 0.5,
+        unit: "credits",
+      },
+    },
     inputSchema: {
       text1: z
         .string()
