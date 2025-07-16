@@ -323,10 +323,6 @@ components:
           type: integer
           description: Number of credits remaining in your account
           example: 999
-        error:
-          type: string
-          description: Error message if detection failed
-          example: "Text too short for reliable analysis"
 
     AiImageDetectionResponse:
       type: object
@@ -665,19 +661,10 @@ components:
           type: string
           description: Error message
           example: "Invalid API key"
-        message:
+        description:
           type: string
           description: Detailed error description
           example: "The provided API key is invalid or has expired"
-        status:
-          type: integer
-          description: HTTP status code
-          example: 401
-        timestamp:
-          type: string
-          format: date-time
-          description: When the error occurred
-          example: "2024-01-15T10:30:00Z"
 
 tags:
   - name: AI Detection
@@ -689,4 +676,4 @@ tags:
 
 externalDocs:
   description: Winston AI Developer Documentation
-  url: https://dev.gowinston.ai
+  url: https://docs.gowinston.ai/api-reference/introduction
