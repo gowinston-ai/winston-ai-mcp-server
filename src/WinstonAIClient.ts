@@ -68,9 +68,9 @@ export class WinstonAiClient {
   
       const sources = r.sources
         .filter((source) => source.canAccess)
-        .slice(0, 4)
+        .slice(0, 2)
         .map((source) => {
-          return `${source.url} with a plagiarism score of ${source.score}% plagiarism`;
+          return `"""${source.url}""" with a plagiarism score of ${source.score}% plagiarism`;
         });
 
         let response: string = "";
@@ -108,12 +108,12 @@ export class WinstonAiClient {
       const humanScore = result.score;
       const aiScore = 100 - humanScore;
   
-      // Return the 4 most AI sentences
+      // Return the 2 most AI sentences
       const ss = result.sentences
         .sort((a, b) => b.score - a.score)
-        .slice(0, 4)
+        .slice(0, 2)
         .map((s) => {
-          return `The sentence ${s.text} has a score of ${s.score}.`;
+          return `The sentence """${s.text}""" with a score of ${s.score}`;
         });
 
         let response: string = "";

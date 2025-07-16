@@ -1,5 +1,5 @@
 {
-  "name": "winston-ai-mcp",
+  "name": "@winston-ai/winston-ai-mcp",
   "version": "1.0.0",
   "description": "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
   "author": "Winston AI",
@@ -7,11 +7,11 @@
   "homepage": "https://github.com/gowinston-ai/winston-ai-mcp-server",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gowinston-ai/winston-ai-mcp-server"
+    "url": "git+https://github.com/gowinston-ai/winston-ai-mcp-server.git"
   },
   "main": "dist/index.js",
   "bin": {
-    "winston-ai-mcp": "./dist/index.js"
+    "winston-ai-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc && chmod 755 dist/index.js",
@@ -60,5 +60,11 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "bugs": {
+    "url": "https://github.com/gowinston-ai/winston-ai-mcp-server/issues"
   }
 }

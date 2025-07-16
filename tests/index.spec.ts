@@ -255,11 +255,11 @@ describe('Winston AI Client', () => {
             });
 
             it('then result should contain the explanation text', () => {
-                expect(result).toContain("The plagiarism detection tool Winston AI has detected the text as 71% plagiarism. The main sources are URL with a plagiarism score of 71% plagiarism.");
+                expect(result).toContain("The plagiarism detection tool Winston AI has detected the text as 71% plagiarism. The main sources are \"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism.");
             });
 
             it('then result should contain the sources', () => {
-                expect(result).toContain("URL with a plagiarism score of 71% plagiarism.");
+                expect(result).toContain("\"\"\"URL\"\"\" with a plagiarism score of 71% plagiarism.");
             });
             
             it('then result should contain the result object', () => {
