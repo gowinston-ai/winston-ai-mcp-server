@@ -92,6 +92,8 @@ export class WinstonAiClient {
           result: r.result,
           sources: sourcesWithoutPlagiarism,
           citations: r.citations,
+          credits_used: r.credits_used,
+          credits_remaining: r.credits_remaining,
         }
 
         response += "\n\n API Response : \n\n" + JSON.stringify(customResponse, null, 2);
