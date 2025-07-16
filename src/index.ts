@@ -155,7 +155,7 @@ server.registerTool(
 
     try {
       const result = await winstonAIClient.request<AiImageDetectorResponse>(
-        "/v2/ai-image-detection",
+        "/v2/image-detection",
         JSON.stringify({
           url,
           version: "latest",

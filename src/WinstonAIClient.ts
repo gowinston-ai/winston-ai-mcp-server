@@ -137,8 +137,8 @@ export class WinstonAiClient {
       let response: string = "";
 
       // Keep only 2 decimals
-      const humanPercentage = Math.round(result.human_probability * 100 * 100) / 100;
-      const aiPercentage = Math.round(result.ai_probability * 100 * 100) / 100;
+      const humanPercentage = Number((result.human_probability * 100).toFixed(2));
+      const aiPercentage = Number((result.ai_probability * 100).toFixed(2));
 
       response += `The AI detector Winston AI has detected the image as ${humanPercentage}% human. Which means that the image is ${aiPercentage}% likely to be AI generated.`;
 
