@@ -180,6 +180,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
+- **Winston AI MCP NPM Package**: [https://www.npmjs.com/package/winston-ai-mcp](https://www.npmjs.com/package/winston-ai-mcp)
 - **Winston AI Website**: [https://gowinston.ai](https://gowinston.ai)
 - **API Documentation**: [https://dev.gowinston.ai](https://dev.gowinston.ai)
 - **MCP Protocol**: [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
