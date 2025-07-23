@@ -50,7 +50,14 @@
 env WINSTONAI_API_KEY=your-api-key npx -y winston-ai-mcp
 ```
 
-### Building from Source
+### Running the MCP Server locally via stdio 💻
+
+Create a `.env` file in your project root:
+
+```env
+WINSTONAI_API_KEY=your_actual_api_key_here
+```
+
 
 ```bash
 # Clone the repository
@@ -62,13 +69,6 @@ npm install
 
 # Build the project and start the server
 npm run mcp-start
-```
-
-### Environment Setup
-Create a `.env` file in your project root:
-
-```env
-WINSTONAI_API_KEY=your_actual_api_key_here
 ```
 
 ## 📦 Docker Support
@@ -128,6 +128,108 @@ Add to your Cursor configuration:
   }
 }
 ```
+
+## Accessing the MCP Server via API 🌐
+
+Our MCP server is hosted at `https://api.gowinston.ai/mcp/v1` and can be accessed via HTTPS requests.
+
+
+#### Example: List tools
+
+```bash
+curl --location 'https://api.gowinston.ai/mcp/v1' \
+--header 'content-type: application/json' \
+--header 'accept: application/json' \
+--header 'jsonrpc: 2.0' \
+--data '{
+  "jsonrpc": "2.0",
+  "method": "tools/list",
+  "id": 1
+}'
+```
+
+#### Example: AI Text Detection
+
+```bash
+curl --location 'https://api.gowinston.ai/mcp/v1' \
+--header 'content-type: application/json' \
+--header 'accept: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "ai-text-detection",
+    "arguments": {
+      "text": "Your text to analyze (minimum 300 characters)",
+      "apiKey": "your-winston-ai-api-key"
+    }
+  }
+}'
+```
+
+#### Example: AI Image Detection
+
+```bash
+curl --location 'https://api.gowinston.ai/mcp/v1' \
+--header 'content-type: application/json' \
+--header 'accept: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "ai-image-detection",
+    "arguments": {
+      "url": "https://example.com/image.jpg",
+      "apiKey": "your-winston-ai-api-key"
+    }
+  }
+}'
+```
+
+#### Example: Plagiarism Detection
+
+```bash
+curl --location 'https://api.gowinston.ai/mcp/v1' \
+--header 'content-type: application/json' \
+--header 'accept: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "plagiarism-detection",
+    "arguments": {
+      "text": "Text to check for plagiarism (minimum 100 characters)",
+      "apiKey": "your-winston-ai-api-key"
+    }
+  }
+}'
+```
+
+#### Example: Text Comparison
+
+```bash
+curl --location 'https://api.gowinston.ai/mcp/v1' \
+--header 'content-type: application/json' \
+--header 'accept: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "tools/call",
+  "params": {
+    "name": "text-compare",
+    "arguments": {
+      "first_text": "First text to compare",
+      "second_text": "Second text to compare",
+      "apiKey": "your-winston-ai-api-key"
+    }
+  }
+}'
+```
+
+**Note:** Replace `your-winston-ai-api-key` with your actual Winston AI API key. You can get one at [https://dev.gowinston.ai](https://dev.gowinston.ai).
 
 ## 📋 API Reference
 
