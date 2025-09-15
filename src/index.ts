@@ -30,7 +30,7 @@ if (!WINSTONAI_API_KEY) {
 
 const server = new McpServer({
   name: "Winston AI MCP Server",
-  version: "1.0.0",
+  version: "1.0.4",
   description:
     "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
 });
