@@ -134,13 +134,12 @@ export class WinstonAiClient {
         return JSON.stringify(result, null, 2);
       }
 
-      let response: string = "";
 
       // Keep only 2 decimals
       const humanPercentage = Number((result.human_probability * 100).toFixed(2));
       const aiPercentage = Number((result.ai_probability * 100).toFixed(2));
 
-      response += `The AI detector Winston AI has detected the image as ${humanPercentage}% human. Which means that the image is ${aiPercentage}% likely to be AI generated.`;
+      let response = `The AI detector Winston AI has detected the image as ${humanPercentage}% human. Which means that the image is ${aiPercentage}% likely to be AI generated.`;
 
       response += "\n\n Full API Response : \n\n" + JSON.stringify(result, null, 2);
 
