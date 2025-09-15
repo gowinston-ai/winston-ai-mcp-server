@@ -1,0 +1,159 @@
+name: Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          # Get the latest tag, default to 0.0.0 if no tags exist
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "Latest tag: $LATEST_TAG"
+          
+      - name: Determine version bump type
+        id: version_bump
+        run: |
+          # Get the source branch name from the PR
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          echo "Source branch: $SOURCE_BRANCH"
+          
+          # Determine version bump type based on branch name
+          if [[ "$SOURCE_BRANCH" == feat/* ]]; then
+            BUMP_TYPE="minor"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
+            echo "Version bump: minor (feature branch)"
+          elif [[ "$SOURCE_BRANCH" == fix/* ]] || [[ "$SOURCE_BRANCH" == bugfix/* ]] || [[ "$SOURCE_BRANCH" == patch/* ]]; then
+            BUMP_TYPE="patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
+            echo "Version bump: patch (fix branch)"
+          elif [[ "$SOURCE_BRANCH" == major/* ]] || [[ "$SOURCE_BRANCH" == breaking/* ]]; then
+            BUMP_TYPE="major"
+            echo "bump_type=major" >> $GITHUB_OUTPUT
+            echo "Version bump: major (breaking change branch)"
+          else
+            # Default to patch for other branch types
+            BUMP_TYPE="patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
+            echo "Version bump: patch (default for branch: $SOURCE_BRANCH)"
+          fi
+          
+      - name: Calculate new version
+        id: new_version
+        run: |
+          LATEST_TAG="${{ steps.get_tag.outputs.latest_tag }}"
+          BUMP_TYPE="${{ steps.version_bump.outputs.bump_type }}"
+          
+          # Remove 'v' prefix if present
+          LATEST_TAG=${LATEST_TAG#v}
+          
+          # Split version into parts
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST_TAG"
+          
+          # Increment based on bump type
+          case $BUMP_TYPE in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+          
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          # Get commits since the last tag
+          LATEST_TAG="${{ steps.get_tag.outputs.latest_tag }}"
+          NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
+          
+          # Generate changelog from commits
+          if [ "$LATEST_TAG" = "0.0.0" ]; then
+            # If no previous tags, get all commits
+            COMMITS=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            # Get commits since last tag
+            COMMITS=$(git log $LATEST_TAG..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          
+          # Create release notes
+          cat > release_notes.md << EOF
+          ## What's Changed
+          
+          $COMMITS
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/$LATEST_TAG...$NEW_VERSION
+          EOF
+          
+          # Output release notes (escape newlines for GitHub Actions)
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          cat release_notes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+      - name: Create and push tag
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION"
+          git push origin "$NEW_VERSION"
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.new_version.outputs.new_version }}
+          release_name: Release ${{ steps.new_version.outputs.new_version }}
+          body: ${{ steps.release_notes.outputs.release_notes }}
+          draft: false
+          prerelease: false
+          
+      - name: Update package.json version
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
+          # Remove 'v' prefix for package.json
+          PACKAGE_VERSION=${NEW_VERSION#v}
+          
+          # Update package.json version
+          npm version $PACKAGE_VERSION --no-git-tag-version
+          
+          # Commit and push the version update
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to $PACKAGE_VERSION"
+          git push origin main
