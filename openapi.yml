@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Winston AI MCP Server
   description: Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.
-  version: 1.0.0
+  version: 1.0.1
   contact:
     name: Winston AI Support
     url: https://gowinston.ai
@@ -521,10 +521,21 @@ components:
                 example: false
               similarWords:
                 type: array
+                description: List of similar words found with their index in the source
                 items:
-                  type: string
-                description: List of similar words found
-                example: ["similar", "words", "found"]
+                  type: object
+                  properties:
+                    index:
+                      type: integer
+                      description: Index of the similar word in the source text
+                      example: 123
+                    word:
+                      type: string
+                      description: The similar word found
+                      example: "example"
+                example:
+                  - index: 123
+                    word: "similar"
         indexes:
           type: array
           items:

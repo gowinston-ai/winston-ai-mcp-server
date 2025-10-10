@@ -9,9 +9,6 @@
     "type": "git",
     "url": "git+https://github.com/gowinston-ai/winston-ai-mcp-server.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.winston-ai-mcp.github.com"
-  },
   "main": "dist/index.js",
   "bin": {
     "winston-ai-mcp": "dist/index.js"
