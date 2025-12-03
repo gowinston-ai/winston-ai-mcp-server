@@ -5,7 +5,6 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import 'dotenv/config'
 import { WinstonAiClient } from "./WinstonAIClient";
-
 import type {
   AiImageDetectorRequest,
   AiImageDetectorResponse,
@@ -30,9 +29,8 @@ if (!WINSTONAI_API_KEY) {
 
 const server = new McpServer({
   name: "Winston AI MCP Server",
-  version: "1.0.4",
-  description:
-    "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
+  version: "1.0.5",
+  websiteUrl: "https://github.com/gowinston-ai/winston-ai-mcp-server"
 });
 
 // Init WinstonAI Client
@@ -43,14 +41,10 @@ server.registerTool(
   "ai-text-detection",
   {
     title: "AI Text Detection",
-    description: "Detects AI content in a given text to detect the likelihood of the text being written by an AI.",
+    description: "Detects AI content in a given text to detect the likelihood of the text being written by an AI. Cost: 1 credit per word.",
     annotations: {
-      price: {
-        type: "number",
-        description: "The price of the text detection tool, 1 credit per word",
-        value: 1,
-        unit: "credits",
-      }
+      readOnlyHint: true,
+      openWorldHint: true,
     },
     inputSchema: {
       text: z
@@ -110,14 +104,10 @@ server.registerTool(
   "ai-image-detection",
   {
     title: "AI Image Detection",
-    description: "Detects AI content in a given image by verifying image metada and using a machine learning system trained to differentiate between human and AI-generated images.",
+    description: "Detects AI content in a given image by verifying image metadata and using a machine learning system trained to differentiate between human and AI-generated images. Cost: 300 credits per image.",
     annotations: {
-      price: {
-        type: "number",
-        description: "The price of the image detection tool, 300 credits per image",
-        value: 300,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
     inputSchema: {
       url: z
@@ -186,14 +176,10 @@ server.registerTool(
   "plagiarism-detection",
   {
     title: "Plagiarism Detection",
-    description: "Winston AI’s plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required.",
+    description: "Winston AI's plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required. Cost: 2 credits per word.",
     annotations: {
-      price: {
-        type: "number",
-        description: "The price of the plagiarism detection tool, 2 credits per word",
-        value: 2,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
     inputSchema: {
       text: z
@@ -276,14 +262,10 @@ server.registerTool(
   "text-compare",
   {
     title: "Text Compare",
-    description: "Compares two texts and returns the similarity score",
+    description: "Compares two texts and returns the similarity score. Cost: 0.5 credit per total words found in both texts.",
     annotations: {
-      price: {
-        type: "number",
-        description: "The price of the text comparison tool, 1/2 credit per total words found in both texts",
-        value: 0.5,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
     inputSchema: {
       first_text: z
