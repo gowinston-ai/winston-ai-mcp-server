@@ -70,31 +70,30 @@ interface PlagiarismResult {
   similarWordCounts: number;
 }
 
-
 interface PlagiarismIndex {
-    startIndex: number;
-    endIndex: number;
-    sequence: string;
-  }
+  startIndex: number;
+  endIndex: number;
+  sequence: string;
+}
 
 interface PlagiarismSource {
-    score: number;
-    canAccess: boolean;
-    totalNumberOfWords: number;
-    plagiarismWords: number;
-    identicalWordCounts: number;
-    similarWordCounts: number;
-    url: string;
-    author: string;
-    description: string;
-    title: string;
-    publishedDate: string;
-    source: string;
-    citation: boolean;
-    plagiarismFound: PlagiarismIndex[];
-    is_excluded: boolean;
-    similarWords: string[];
-  }
+  score: number;
+  canAccess: boolean;
+  totalNumberOfWords: number;
+  plagiarismWords: number;
+  identicalWordCounts: number;
+  similarWordCounts: number;
+  url: string;
+  author: string;
+  description: string;
+  title: string;
+  publishedDate: string;
+  source: string;
+  citation: boolean;
+  plagiarismFound: PlagiarismIndex[];
+  is_excluded: boolean;
+  similarWords: string[];
+}
 
 export interface PlagiarismDetectionResponse {
   status: number;
