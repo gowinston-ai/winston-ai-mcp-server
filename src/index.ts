@@ -352,6 +352,8 @@ server.registerTool(
 async function startServer() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
+
+  console.log("Winston AI MCP Server is running");
 }
 
 startServer().catch((error) => {
