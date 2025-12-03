@@ -29,8 +29,7 @@ if (!WINSTONAI_API_KEY) {
 const server = new McpServer({
   name: "Winston AI MCP Server",
   version: "1.0.4",
-  description:
-    "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
+  websiteUrl: "https://github.com/gowinston-ai/winston-ai-mcp-server"
 });
 
 // Init WinstonAI Client
@@ -42,16 +41,12 @@ server.registerTool(
   {
     title: "AI Text Detection",
     description:
-      "Detects AI content in a given text to detect the likelihood of the text being written by an AI.",
+      "Detects AI content in a given text to detect the likelihood of the text being written by an AI. Cost: 1 credit per word.",
     annotations: {
-      price: {
-        type: "number",
-        description: "The price of the text detection tool, 1 credit per word",
-        value: 1,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
-    inputSchema: {
+    inputSchema: z.object({
       text: z
         .string()
         .min(300, "The text must be at least 300 characters long.")
@@ -71,9 +66,9 @@ server.registerTool(
         .describe(
           "A website URL to scan. If you supply a website, the API will fetch the content of the website and scan it. The website must be publicly accessible. It's important to know that the website has priority over the text and the file, so if you give a text, a file and a website, it's the website that will be scanned.",
         ),
-    },
+    }),
   },
-  async ({ text, file, website }: AiTextDetectorRequest) => {
+  async ({ text, file, website }) => {
     if (winstonAIClient.isApiKeyInvalid()) {
       return {
         content: [
@@ -125,26 +120,21 @@ server.registerTool(
   {
     title: "AI Image Detection",
     description:
-      "Detects AI content in a given image by verifying image metada and using a machine learning system trained to differentiate between human and AI-generated images.",
+      "Detects AI content in a given image by verifying image metadata and using a machine learning system trained to differentiate between human and AI-generated images. Cost: 300 credits per image.",
     annotations: {
-      price: {
-        type: "number",
-        description:
-          "The price of the image detection tool, 300 credits per image",
-        value: 300,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
-    inputSchema: {
+    inputSchema: z.object({
       url: z
         .string()
         .url()
         .describe(
           "Specifies the URL of the image to scan. The URL must be valid, publicly accessible, and point to an image in one of the following formats: JPG, JPEG, PNG, or WEBP. The image must have a minimum resolution of 256x256 pixels.",
         ),
-    },
+    }),
   },
-  async ({ url }: AiImageDetectorRequest) => {
+  async ({ url }) => {
     if (winstonAIClient.isApiKeyInvalid()) {
       return {
         content: [
@@ -203,17 +193,12 @@ server.registerTool(
   {
     title: "Plagiarism Detection",
     description:
-      "Winston AI’s plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required.",
+      "Winston AI's plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required. Cost: 2 credits per word.",
     annotations: {
-      price: {
-        type: "number",
-        description:
-          "The price of the plagiarism detection tool, 2 credits per word",
-        value: 2,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
-    inputSchema: {
+    inputSchema: z.object({
       text: z
         .string()
         .min(100, "The text must be at least 100 characters long.")
@@ -235,9 +220,9 @@ server.registerTool(
           "The country code of the country where the text was written. We accept all country codes. Default: us.",
         )
         .default("us"),
-    },
+    }),
   },
-  async ({ text, language, country }: PlagiarismDetectionRequest) => {
+  async ({ text, language, country }) => {
     if (winstonAIClient.isApiKeyInvalid()) {
       return {
         content: [
@@ -298,17 +283,12 @@ server.registerTool(
   "text-compare",
   {
     title: "Text Compare",
-    description: "Compares two texts and returns the similarity score",
+    description: "Compares two texts and returns the similarity score. Cost: 0.5 credit per total words found in both texts.",
     annotations: {
-      price: {
-        type: "number",
-        description:
-          "The price of the text comparison tool, 1/2 credit per total words found in both texts",
-        value: 0.5,
-        unit: "credits",
-      },
+      readOnlyHint: true,
+      openWorldHint: true,
     },
-    inputSchema: {
+    inputSchema: z.object({
       first_text: z
         .string()
         .max(120000)
@@ -319,7 +299,7 @@ server.registerTool(
         .describe(
           "The second text to compare against the first text. Maximum 120,000 characters.",
         ),
-    },
+    }),
   },
   async ({ first_text, second_text }: TextCompareRequest) => {
     if (winstonAIClient.isApiKeyInvalid()) {

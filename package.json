@@ -42,7 +42,7 @@
     "winston-ai"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.18.0",
+    "@modelcontextprotocol/sdk": "^1.24.2",
     "axios": "^1.13.2",
     "dotenv": "^17.2.3",
     "zod": "^3.25.76"
