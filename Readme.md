@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/gowinston-ai-winston-ai-mcp-server-badge.png)](https://mseep.ai/app/gowinston-ai-winston-ai-mcp-server)
+
 # Winston AI MCP Server ⚡️
 
 [![npm version](https://badge.fury.io/js/winston-ai-mcp.svg)](https://badge.fury.io/js/winston-ai-mcp)
