@@ -28,7 +28,7 @@ if (!WINSTONAI_API_KEY) {
 
 const server = new McpServer({
   name: "Winston AI MCP Server",
-  version: "1.0.8",
+  version: "1.0.9",
   websiteUrl: "https://github.com/gowinston-ai/winston-ai-mcp-server",
 });
 
