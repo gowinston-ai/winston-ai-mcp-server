@@ -1,6 +1,6 @@
 {
   "name": "winston-ai-mcp",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Model Context Protocol (MCP) Server for Winston AI - the most accurate AI Detector. Detect AI-generated content, plagiarism, and compare texts with ease.",
   "author": "Winston AI",
   "license": "MIT",
@@ -43,24 +43,24 @@
     "winston-ai"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.26.0",
-    "axios": "^1.13.4",
-    "dotenv": "^17.2.3",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "axios": "^1.13.6",
+    "dotenv": "^17.3.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.12",
-    "@typescript-eslint/eslint-plugin": "^8.37.0",
-    "@typescript-eslint/parser": "^8.37.0",
-    "eslint": "^9.31.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^10.0.3",
     "globals": "^16.3.0",
-    "jest": "^30.0.4",
+    "jest": "^30.3.0",
     "prettier": "^3.8.1",
     "ts-jest": "^29.4.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.37.0"
+    "typescript-eslint": "^8.57.1"
   },
   "engines": {
     "node": ">=18.0.0"
