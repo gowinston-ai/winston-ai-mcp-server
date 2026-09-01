@@ -131,15 +131,16 @@ Add to your Cursor configuration:
 
 ## Accessing the MCP Server via API 🌐
 
-Our MCP server is hosted at `https://api.gowinston.ai/mcp/v1` and can be accessed via HTTPS requests.
-
+The server is at `https://api.gowinston.ai/mcp/v1` over HTTPS **Streamable HTTP**
+(JSON responses). MCP clients (Cursor, MCP Inspector) should use that URL and
+transport. You can also call it with curl.
 
 #### Example: List tools
 
 ```bash
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
---header 'accept: application/json' \
+--header 'accept: application/json, text/event-stream' \
 --header 'jsonrpc: 2.0' \
 --data '{
   "jsonrpc": "2.0",
@@ -153,7 +154,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 ```bash
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
---header 'accept: application/json' \
+--header 'accept: application/json, text/event-stream' \
 --data '{
   "jsonrpc": "2.0",
   "id": 1,
@@ -173,7 +174,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 ```bash
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
---header 'accept: application/json' \
+--header 'accept: application/json, text/event-stream' \
 --data '{
   "jsonrpc": "2.0",
   "id": 2,
@@ -193,7 +194,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 ```bash
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
---header 'accept: application/json' \
+--header 'accept: application/json, text/event-stream' \
 --data '{
   "jsonrpc": "2.0",
   "id": 3,
@@ -202,27 +203,6 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
     "name": "plagiarism-detection",
     "arguments": {
       "text": "Text to check for plagiarism (minimum 100 characters)",
-      "apiKey": "your-winston-ai-api-key"
-    }
-  }
-}'
-```
-
-#### Example: Text Comparison
-
-```bash
-curl --location 'https://api.gowinston.ai/mcp/v1' \
---header 'content-type: application/json' \
---header 'accept: application/json' \
---data '{
-  "jsonrpc": "2.0",
-  "id": 4,
-  "method": "tools/call",
-  "params": {
-    "name": "text-compare",
-    "arguments": {
-      "first_text": "First text to compare",
-      "second_text": "Second text to compare",
       "apiKey": "your-winston-ai-api-key"
     }
   }
