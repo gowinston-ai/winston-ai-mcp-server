@@ -135,13 +135,14 @@ The server is at `https://api.gowinston.ai/mcp/v1` over HTTPS **Streamable HTTP*
 (JSON responses). MCP clients (Cursor, MCP Inspector) should use that URL and
 transport. You can also call it with curl.
 
+Authenticate with your Winston AI API key in the `Authorization` header as a Bearer token.
+
 #### Example: List tools
 
 ```bash
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
---header 'jsonrpc: 2.0' \
 --data '{
   "jsonrpc": "2.0",
   "method": "tools/list",
@@ -155,6 +156,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
+--header 'Authorization: Bearer your-winston-ai-api-key' \
 --data '{
   "jsonrpc": "2.0",
   "id": 1,
@@ -162,8 +164,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
   "params": {
     "name": "ai-text-detection",
     "arguments": {
-      "text": "Your text to analyze (minimum 300 characters)",
-      "apiKey": "your-winston-ai-api-key"
+      "text": "Your text to analyze (minimum 300 characters)"
     }
   }
 }'
@@ -175,6 +176,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
+--header 'Authorization: Bearer your-winston-ai-api-key' \
 --data '{
   "jsonrpc": "2.0",
   "id": 2,
@@ -182,8 +184,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
   "params": {
     "name": "ai-image-detection",
     "arguments": {
-      "url": "https://example.com/image.jpg",
-      "apiKey": "your-winston-ai-api-key"
+      "url": "https://example.com/image.jpg"
     }
   }
 }'
@@ -195,6 +196,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
+--header 'Authorization: Bearer your-winston-ai-api-key' \
 --data '{
   "jsonrpc": "2.0",
   "id": 3,
@@ -202,14 +204,13 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
   "params": {
     "name": "plagiarism-detection",
     "arguments": {
-      "text": "Text to check for plagiarism (minimum 100 characters)",
-      "apiKey": "your-winston-ai-api-key"
+      "text": "Text to check for plagiarism (minimum 100 characters)"
     }
   }
 }'
 ```
 
-**Note:** Replace `your-winston-ai-api-key` with your actual Winston AI API key. You can get one at [https://dev.gowinston.ai](https://dev.gowinston.ai).
+**Note:** Replace `your-winston-ai-api-key` in the `Authorization` header with your Winston AI API key. You can get one at [https://dev.gowinston.ai](https://dev.gowinston.ai).
 
 ## 📋 API Reference
 
