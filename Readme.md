@@ -143,7 +143,6 @@ Authenticate with your Winston AI API key in the `Authorization` header as a Bea
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
---header 'Authorization: Bearer your-winston-ai-api-key' \
 --data '{
   "jsonrpc": "2.0",
   "method": "tools/list",
