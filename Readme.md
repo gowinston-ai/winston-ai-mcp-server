@@ -97,27 +97,7 @@ docker run -e WINSTONAI_API_KEY=your_api_key winston-ai-mcp
 
 ## 🔧 Configuration
 
-### For Claude Desktop
-
-Add to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "winston-ai-mcp": {
-      "command": "npx",
-      "args": ["-y", "winston-ai-mcp"],
-      "env": {
-        "WINSTONAI_API_KEY": "your-api-key"
-      }
-    }
-  }
-}
-```
-
-### For Cursor IDE
-
-Add to your Cursor configuration:
+To run the server locally, add it to your MCP client's configuration, such as Cursor (`mcp.json`), Claude Desktop (`claude_desktop_config.json`), and others:
 
 ```json
 {
