@@ -40,6 +40,10 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
+To use the hosted server, you only need a [Winston AI](https://app.gowinston.ai) account. See [Remote MCP Server via HTTP](#remote-mcp-server-via-http-).
+
+To run the server locally:
 - Node.js 18+ 
 - Winston AI API Key ([Get one here](https://dev.gowinston.ai))
 
@@ -129,13 +133,70 @@ Add to your Cursor configuration:
 }
 ```
 
-## Accessing the MCP Server via API 🌐
+## Remote MCP Server via HTTP 🌐
 
-The server is at `https://api.gowinston.ai/mcp/v1` over HTTPS **Streamable HTTP**
-(JSON responses). MCP clients (Cursor, MCP Inspector) should use that URL and
+The hosted server is at `https://api.gowinston.ai/mcp/v1` over HTTPS **Streamable HTTP**
+(JSON responses). Popular MCP clients, such as Cursor, ChatGPT, Claude, and others, should use that URL and
 transport. You can also call it with curl.
 
-Authenticate with your Winston AI API key in the `Authorization` header as a Bearer token.
+### Authentication
+
+Every request must send a Bearer token in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+**OAuth 2.1** is the easiest way to connect. Sign in with your [Winston AI](https://app.gowinston.ai) account and your MCP client gets an access token for you. There's no API key to copy or store. Credits are taken from your app.gowinston.ai account, not the API platform.
+
+If you want, you can also use a standard API key from [https://dev.gowinston.ai](https://dev.gowinston.ai) as the Bearer token.
+
+Never send the token in the request body or URL. Only the `Authorization` header is supported.
+
+#### How the OAuth 2.1 flow works
+
+MCP clients that support [MCP authorization](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/authorization) handle this for you:
+
+1. A request without a token receives `401 Unauthorized` with a `WWW-Authenticate` header pointing to the protected resource metadata.
+2. The client reads [`https://api.gowinston.ai/.well-known/oauth-protected-resource`](https://api.gowinston.ai/.well-known/oauth-protected-resource), which lists `https://app.gowinston.ai` as the authorization server and `mcp:use` as the required scope.
+3. The client opens your browser so you can sign in to Winston AI and approve access.
+4. The client receives an access token and sends it as `Authorization: Bearer <token>` on every request.
+
+Possible errors:
+
+- `401`: Missing, invalid, or expired token.
+- `403`: Valid token without the `mcp:use` scope.
+
+### Connect from an MCP client
+
+Add the hosted server URL to your MCP client, such as Cursor, ChatGPT, Claude, and others. The client signs you in with OAuth 2.1 the first time you connect. For clients configured with JSON, it looks like this:
+
+```json
+{
+  "mcpServers": {
+    "winston-ai": {
+      "url": "https://api.gowinston.ai/mcp/v1"
+    }
+  }
+}
+```
+
+If you want, you can also use a standard API key from [dev.gowinston.ai](https://dev.gowinston.ai) by passing it in the `Authorization` header:
+
+```json
+{
+  "mcpServers": {
+    "winston-ai": {
+      "url": "https://api.gowinston.ai/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer your-winston-ai-api-key"
+      }
+    }
+  }
+}
+```
+
+### cURL examples
 
 #### Example: List tools
 
@@ -143,6 +204,7 @@ Authenticate with your Winston AI API key in the `Authorization` header as a Bea
 curl --location 'https://api.gowinston.ai/mcp/v1' \
 --header 'content-type: application/json' \
 --header 'accept: application/json, text/event-stream' \
+--header 'Authorization: Bearer your-winston-ai-api-key' \
 --data '{
   "jsonrpc": "2.0",
   "method": "tools/list",
@@ -210,7 +272,7 @@ curl --location 'https://api.gowinston.ai/mcp/v1' \
 }'
 ```
 
-**Note:** Replace `your-winston-ai-api-key` in the `Authorization` header with your Winston AI API key. You can get one at [https://dev.gowinston.ai](https://dev.gowinston.ai).
+**Note:** Replace `your-winston-ai-api-key` in the `Authorization` header with your OAuth 2.1 access token. If you want, you can also use a standard API key from [https://dev.gowinston.ai](https://dev.gowinston.ai).
 
 ## 📋 API Reference
 
@@ -266,6 +328,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Winston AI MCP NPM Package**: [https://www.npmjs.com/package/winston-ai-mcp](https://www.npmjs.com/package/winston-ai-mcp)
 - **Winston AI Website**: [https://gowinston.ai](https://gowinston.ai)
 - **API Documentation**: [https://dev.gowinston.ai](https://dev.gowinston.ai)
+- **MCP Server Documentation**: [https://docs.gowinston.ai/api-reference/mcp-server](https://docs.gowinston.ai/api-reference/mcp-server)
+- **MCP Authorization (OAuth 2.1)**: [https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/authorization](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/authorization)
 - **MCP Protocol**: [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **GitHub Repository**: [https://github.com/gowinston-ai/winston-ai-mcp-server](https://github.com/gowinston-ai/winston-ai-mcp-server)
 

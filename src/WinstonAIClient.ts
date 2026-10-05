@@ -110,6 +110,15 @@ export class WinstonAiClient {
     return response;
   }
 
+  /**
+   * Keep 2 decimals
+   * @param value - The value to keep 2 decimals
+   * @returns The value with 2 decimals
+   */
+  private keep2Decimals(value: number): number {
+    return Number(value.toFixed(2));
+  }
+
   public assembleAiTextDetectorResponse(
     result: AiTextDetectorResponse | IResponseError,
   ): string {
@@ -118,7 +127,7 @@ export class WinstonAiClient {
     }
 
     const humanScore = result.score;
-    const aiScore = 100 - humanScore;
+    const aiScore = this.keep2Decimals(100 - humanScore);
 
     let response: string = `The AI detector Winston AI has detected the text as ${humanScore}% human-written. Which means that the text is ${aiScore}% likely to be written by an AI.`;
 
